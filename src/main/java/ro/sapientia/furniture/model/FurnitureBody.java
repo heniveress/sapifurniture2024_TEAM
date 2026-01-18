@@ -27,6 +27,17 @@ public class FurnitureBody implements Serializable {
 
 	@Column(name = "depth")
 	private int depth;
+	
+	@Column(name = "material")
+	private String material;
+	
+	public String getMaterial() {
+		return material;
+	}
+	
+	public void setMaterial(String material) {
+		this.material = material;
+	}
 
 	public Long getId() {
 		return id;
@@ -66,7 +77,7 @@ public class FurnitureBody implements Serializable {
 
 	@Override
 	public String toString() {
-		return "FurnitureBody [id=" + id + ", width=" + width + ", heigth=" + heigth + ", depth=" + depth + "]";
+		return "FurnitureBody [id=" + id + ", width=" + width + ", heigth=" + heigth + ", depth=" + depth + ", material=" + material + "]";
 	}
 
 }
