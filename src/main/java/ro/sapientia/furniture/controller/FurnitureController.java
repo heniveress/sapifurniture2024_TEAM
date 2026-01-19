@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ro.sapientia.furniture.model.FurnitureBody;
 import ro.sapientia.furniture.service.FurnitureBodyService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/furniture")
 public class FurnitureController {

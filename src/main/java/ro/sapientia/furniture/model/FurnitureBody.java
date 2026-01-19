@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Lob;
 
 @Entity(name = "furniture_body")
 public class FurnitureBody implements Serializable {
@@ -30,6 +31,10 @@ public class FurnitureBody implements Serializable {
 	
 	@Column(name = "material")
 	private String material;
+	
+	@Lob
+	@Column(name = "layout", columnDefinition = "TEXT")
+	private String layout;
 	
 	public String getMaterial() {
 		return material;
@@ -70,6 +75,14 @@ public class FurnitureBody implements Serializable {
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
+	
+	public String getLayout() {
+		return layout;
+	}
+	
+	public void setLayout(String layout) {
+		this.layout = layout;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -77,7 +90,7 @@ public class FurnitureBody implements Serializable {
 
 	@Override
 	public String toString() {
-		return "FurnitureBody [id=" + id + ", width=" + width + ", heigth=" + heigth + ", depth=" + depth + ", material=" + material + "]";
+		return "FurnitureBody [id=" + id + ", width=" + width + ", heigth=" + heigth + ", depth=" + depth + ", material=" + material + ", layout=" + layout + "]";
 	}
 
 }
