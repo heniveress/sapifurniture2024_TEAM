@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Lob;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+
 @Entity(name = "furniture_body")
 public class FurnitureBody implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -33,8 +37,14 @@ public class FurnitureBody implements Serializable {
 	private String material;
 	
 	@Lob
-	@Column(name = "layout", columnDefinition = "TEXT")
+	@org.hibernate.annotations.Type(type = "org.hibernate.type.TextType") 
+	@Column(name = "layout")
 	private String layout;
+	
+	@ManyToOne
+	@JoinColumn(name = "project_id")
+	@JsonIgnore
+	private Project project;
 	
 	public String getMaterial() {
 		return material;
@@ -82,6 +92,14 @@ public class FurnitureBody implements Serializable {
 	
 	public void setLayout(String layout) {
 		this.layout = layout;
+	}
+	
+	public Project getProject() {
+		return project;
+	}
+	
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	public static long getSerialversionuid() {

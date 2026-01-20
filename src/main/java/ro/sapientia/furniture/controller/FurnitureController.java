@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,10 @@ import ro.sapientia.furniture.model.FurnitureBody;
 import ro.sapientia.furniture.service.FurnitureBodyService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import ro.sapientia.furniture.model.Project;
+import ro.sapientia.furniture.repository.ProjectRepository;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -22,9 +27,31 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public class FurnitureController {
 
 	private final FurnitureBodyService furnitureBodyService;
+	private final ProjectRepository projectRepository;
 	
-	public FurnitureController(final FurnitureBodyService furnitureBodyService) {
+	public FurnitureController(final FurnitureBodyService furnitureBodyService, final ProjectRepository projectRepository) {
 		this.furnitureBodyService = furnitureBodyService;
+		this.projectRepository = projectRepository;
+	}
+	
+	@PostMapping("/project/save")
+	@CrossOrigin(origins = "http://localhost:4200")
+	public ResponseEntity<Project> saveProject(@RequestBody Project project) {
+	    if (project.getFurnitures() != null) {
+	        project.getFurnitures().forEach(f -> f.setProject(project));
+	    }
+	    return ResponseEntity.ok(projectRepository.save(project));
+	}
+	
+	@GetMapping("/project/all")
+	public ResponseEntity<List<Project>> getAllProjects() {
+	    return ResponseEntity.ok(projectRepository.findAll());
+	}
+	
+	@DeleteMapping("/project/delete/{id}")
+	public ResponseEntity<?> deleteProject(@PathVariable("id") Long id) {
+		projectRepository.deleteById(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping("/all")
